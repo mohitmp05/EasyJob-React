@@ -31,14 +31,18 @@ const Login = () => {
 
   useEffect(()=>{
     document.title= "Login | EasyJob"
-    if(JSON.parse(localStorage.getItem("jwt")).length){
-      navigate("/home")
-    }
-  },[])
+    // if(JSON.parse(localStorage.getItem("jwt")).length){
+    //   navigate("/home")
+    // }
+  })
 
   const handleOnSubmit = () => {
     dispatch(authenticateUser({ username: username, password: password }));
   };
+
+  if(JSON.parse(localStorage.getItem("jwt")).length){
+    return <Homepage data={JSON.parse(localStorage.getItem("jwt"))}/>
+  }
 
   // if(!flag){
   //   return <Homepage data={user}/>

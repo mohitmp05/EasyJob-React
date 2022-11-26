@@ -5,16 +5,15 @@ const initialState = {
   loading: false,
   user: [],
   error: "",
+  isLogged: false,
 };
+
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
   const response = await axios
     .get("http://localhost:7071/user/getuser", {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((response) => {
-      localStorage.setItem("user", JSON.stringify(response.data));
-    });
   return response.data;
 });
 const userSlice = createSlice({
@@ -28,6 +27,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.error = "";
+      state.isLogged = true
     });
     builder.addCase(fetchUser.rejected, (state, action) => {
       state.loading = false;
