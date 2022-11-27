@@ -6,6 +6,7 @@ const initialState = {
   user: [],
   error: "",
   isLogged: false,
+  
 };
 
 
@@ -14,11 +15,18 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
     .get("http://localhost:7071/user/getuser", {
       headers: { Authorization: `Bearer ${token}` },
     })
+    console.log(response.data)
   return response.data;
 });
+
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers:{
+    logout: (state,action) => {
+      state.isLogged = false
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.pending, (state) => {
       state.loading = true;
@@ -36,5 +44,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const {logout} = userSlice.actions;
 
 export default userSlice.reducer;

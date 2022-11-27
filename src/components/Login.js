@@ -37,6 +37,7 @@ const Login = () => {
   })
 
   const handleOnSubmit = () => {
+    console.log("in onclick")
     dispatch(authenticateUser({ username: username, password: password }));
   };
 

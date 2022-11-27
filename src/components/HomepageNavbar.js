@@ -1,16 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { json, useNavigate } from "react-router";
 import { Menu } from "semantic-ui-react";
 import logo from "../images/easyjob-logo.png";
+import { logout } from "../redux/user/userSlice";
 
 function HomepageNavbar() {
-  const [activeItem, setActiveItem] = useState("Dashboard");
   const navigate = useNavigate();
-  const handleItemClick = (e, { name }) => {
-    setActiveItem(name);
-  };
-  const handleLogout = (e, { name }) => {
-    setActiveItem(name);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout())
     localStorage.setItem("jwt", JSON.stringify(""));
     localStorage.setItem("user", JSON.stringify(""));
     navigate("/");
@@ -21,22 +20,9 @@ function HomepageNavbar() {
         <img src={logo} alt="logo" style={{ width: "25%", height: "25%" }} />
       </Menu.Item>
 
-      <Menu.Menu position="right">
-        <Menu.Item
-          name="Dashboard"
-          active={activeItem === "Dashboard"}
-          onClick={handleItemClick}
-          style={{ color: "white" }}
-        />
-        <Menu.Item
-          name="Profile"
-          active={activeItem === "Manage Jobs"}
-          onClick={handleItemClick}
-          style={{ color: "white" }}
-        />
+      <Menu.Menu position="right" style={{marginRight:"15px", fontSize:"16px"}}>
         <Menu.Item
           name="logout"
-          active={activeItem === "logout"}
           onClick={handleLogout}
           style={{ color: "white" }}
         />
