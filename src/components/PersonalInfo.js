@@ -34,7 +34,7 @@ const PersonalInfo = (props) => {
 
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.userProfile.userProfile);
-  const [button, setButton] = useState(true)
+  const [isVisible, setIsVisible] = useState(true);
   const [userDetails, setUserDetails] = useState({
     fullName: "",
     aadharNo: "",
@@ -57,6 +57,25 @@ const PersonalInfo = (props) => {
     console.log(userDetails);
   };
 
+  const handleOnEdit = () => {
+    setIsVisible(false);
+    const newUserDetails = () => {
+      return {
+        ...userDetails,
+        fullName: userProfile.fullName,
+        aadharNo: userProfile.aadharNo,
+        college: userProfile.college,
+        contactNo: userProfile.contactNo,
+        address: userProfile.address,
+        highestQualification: userProfile.highestQualification,
+        yearOfExperience: userProfile.yearOfExperience,
+        pastEmployer: userProfile.pastEmployer,
+      };
+    };
+    setUserDetails(newUserDetails);
+    console.log(userDetails);
+  };
+
   return (
     <div
       className="ui card"
@@ -68,10 +87,15 @@ const PersonalInfo = (props) => {
         width: "100%",
       }}
     >
-      <Header as="h2" style={{ width: "100%", padding: "10px", alignItems: "center" }}>
+      <Header
+        as="h2"
+        style={{ width: "100%", padding: "10px", alignItems: "center" }}
+      >
         <Header.Content>Personal Information</Header.Content>
-        <a><Icon mini name="edit" style={{float:"right"}}/></a>
-        <hr/>
+        <a onClick={handleOnEdit}>
+          <Icon name="edit" style={{ float: "right" }} />
+        </a>
+        <hr />
       </Header>
       <Form
         unstackable
@@ -79,23 +103,19 @@ const PersonalInfo = (props) => {
         onSubmit={handleOnUpdate}
       >
         <Form.Group widths={2}>
-          <Form.Input 
+          <Form.Input
             label="Full Name"
             placeholder="Full Name"
             defaultValue={userProfile.fullName}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, fullName: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, fullName: e.target.value })}
+            disabled={isVisible}
           />
           <Form.Input
             label="Aadhar Number"
             placeholder="Aadhar Number"
             defaultValue={userProfile.aadharNo}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, aadharNo: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, aadharNo: e.target.value })}
+            disabled={isVisible}
           />
         </Form.Group>
         <Form.Group widths={2}>
@@ -103,20 +123,16 @@ const PersonalInfo = (props) => {
             label="College Name"
             placeholder="College Name"
             defaultValue={userProfile.college}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, college: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, college: e.target.value })}
+            disabled={isVisible}
           />
           <Form.Input
             label="Contact Number"
             placeholder="Contact Number"
             type="tel"
             defaultValue={userProfile.contactNo}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, contactNo: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, contactNo: e.target.value })}
+            disabled={isVisible}
           />
         </Form.Group>
         <Form.Group widths={2}>
@@ -124,22 +140,17 @@ const PersonalInfo = (props) => {
             label="Address"
             placeholder="Address"
             defaultValue={userProfile.address}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, address: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, address: e.target.value })}
+            disabled={isVisible}
           />
           <Form.Input
             label="Highest Qualification"
             placeholder="Highest Qualification"
             defaultValue={userProfile.highestQualification}
             onChange={(e) =>
-              setUserDetails({
-                ...userDetails,
-                highestQualification: e.target.value,
-              })
+              setUserDetails({...userDetails, highestQualification: e.target.value })
             }
-            disabled={button}
+            disabled={isVisible}
           />
         </Form.Group>
 
@@ -150,7 +161,7 @@ const PersonalInfo = (props) => {
             multiple
             selection
             options={options}
-            disabled={button}
+            disabled={isVisible}
           />
           <Form.Input
             label="Years Of Experience"
@@ -158,12 +169,9 @@ const PersonalInfo = (props) => {
             type="number"
             defaultValue={userProfile.yearOfExperience}
             onChange={(e) =>
-              setUserDetails({
-                ...userDetails,
-                yearOfExperience: e.target.value,
-              })
+              setUserDetails({...userDetails, yearOfExperience: e.target.value })
             }
-            disabled={button}
+            disabled={isVisible}
           />
         </Form.Group>
 
@@ -172,10 +180,8 @@ const PersonalInfo = (props) => {
             label="Past Employer (If any)"
             placeholder="Past Employer"
             defaultValue={userProfile.pastEmployer}
-            onChange={(e) =>
-              setUserDetails({ ...userDetails, pastEmployer: e.target.value })
-            }
-            disabled={button}
+            onChange={(e) => setUserDetails({...userDetails, pastEmployer: e.target.value })}
+            disabled={isVisible}
           />
           <Form.Input
             label="Resume"
@@ -187,7 +193,7 @@ const PersonalInfo = (props) => {
         <Button
           style={{ backgroundColor: "#6c63ff", color: "white" }}
           type="submit"
-          disabled={button}
+          disabled={isVisible}
         >
           Submit
         </Button>

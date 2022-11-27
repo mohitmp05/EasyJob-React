@@ -14,7 +14,6 @@ export const fetchProfile = createAsyncThunk(
     const response = await axios.get(
       "http://localhost:7072/profile/view/" + username
     );
-    console.log(response.data);
     return response.data;
   }
 );
@@ -26,7 +25,6 @@ export const updateUser = createAsyncThunk(
       "http://localhost:7072/profile/update/" + username,
       userDetails
     );
-    console.log(response.data);
     return response.data;
   }
 );
