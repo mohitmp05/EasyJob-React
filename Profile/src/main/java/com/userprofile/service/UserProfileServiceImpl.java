@@ -32,8 +32,7 @@ public class UserProfileServiceImpl {
     }
 
     // Update Profile
-    public UserProfile updateUser(String username, UserProfile user){
-        user.setUsername(username);
+    public UserProfile updateUser(UserProfile user){
         return profileRepository.save(user);
     }
 

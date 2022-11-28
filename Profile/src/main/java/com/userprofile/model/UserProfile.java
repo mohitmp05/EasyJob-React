@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
 
 @Entity
 @AllArgsConstructor
@@ -19,12 +20,12 @@ public class UserProfile {
     @Id
     private String username;
     private String fullName;
-    private long aadharNo;
+    private String aadharNo;
     private String college;
     private String contactNo;
     private String highestQualification;
-    private String skills;
-    private int yearOfExperience;
+    private ArrayList skills;
+    private String yearOfExperience;
     private String pastEmployer;
     private String address;
 //    @Lob

@@ -36,7 +36,6 @@ public class UserController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-        System.out.println("In customer authentication");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -48,7 +47,6 @@ public class UserController {
 //        System.out.println(authenticationRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         authenticationResponse.setJwt(jwt);
-        System.out.println(authenticationResponse.getJwt());
         return ResponseEntity.ok(authenticationResponse.getJwt());
     }
 
@@ -61,15 +59,7 @@ public class UserController {
     public ResponseEntity findCustomerByUsername() throws Exception {
         Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)auth).getUsername();
-        System.out.println("get user");
         return ResponseEntity.ok(userDetailsService.findUserDetails(username));
     }
-//
-//    @PostMapping("/addDetails")
-//    public ResponseEntity addCustomerDetails(@RequestBody @Valid EmployeeDTO employeeDTO){
-//        Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username = ((UserDetails)auth).getUsername();
-//        return ResponseEntity.ok(employeeServiceImpl.addCustomerDetails(employeeDTO,username));
-//    }
 
 }

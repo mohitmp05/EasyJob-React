@@ -20,9 +20,9 @@ export const fetchProfile = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (username, userDetails) => {
+  async (userDetails) => {
     const response = await axios.put(
-      "http://localhost:7072/profile/update/" + username,
+      "http://localhost:7072/profile/update",
       userDetails
     );
     return response.data;

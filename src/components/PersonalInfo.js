@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 import {
   Button,
   Divider,
@@ -8,40 +9,42 @@ import {
   Header,
   Icon,
 } from "semantic-ui-react";
-import { fetchProfile } from "../redux/userProfile/userProfileSlice";
+import { fetchProfile, updateUser } from "../redux/userProfile/userProfileSlice";
 
 const PersonalInfo = (props) => {
   const options = [
-    { key: "angular", text: "Angular", value: "angular" },
-    { key: "css", text: "CSS", value: "css" },
-    { key: "design", text: "Graphic Design", value: "design" },
-    { key: "ember", text: "Ember", value: "ember" },
-    { key: "html", text: "HTML", value: "html" },
-    { key: "ia", text: "Information Architecture", value: "ia" },
-    { key: "javascript", text: "Javascript", value: "javascript" },
-    { key: "mech", text: "Mechanical Engineering", value: "mech" },
-    { key: "meteor", text: "Meteor", value: "meteor" },
-    { key: "node", text: "NodeJS", value: "node" },
-    { key: "plumbing", text: "Plumbing", value: "plumbing" },
-    { key: "python", text: "Python", value: "python" },
-    { key: "rails", text: "Rails", value: "rails" },
-    { key: "react", text: "React", value: "react" },
-    { key: "repair", text: "Kitchen Repair", value: "repair" },
-    { key: "ruby", text: "Ruby", value: "ruby" },
-    { key: "ui", text: "UI Design", value: "ui" },
-    { key: "ux", text: "User Experience", value: "ux" },
+      { key: "angular", text: "Angular", value: 1 },
+      { key: "css", text: "CSS", value: 2 },
+      { key: "design", text: "Graphic Design", value: 3 },
+      { key: "ember", text: "Ember", value: 4 },
+      { key: "html", text: "HTML", value:5},
+      { key: "ia", text: "Information Architecture", value: 6 },
+      { key: "javascript", text: "Javascript", value:7},
+      { key: "mech", text: "Mechanical Engineering", value: 8},
+      { key: "meteor", text: "Meteor", value: 9 },
+      { key: "node", text: "NodeJS", value:10 },
+      { key: "plumbing", text: "Plumbing", value: 11 },
+      { key: "python", text: "Python", value:12 },
+      { key: "rails", text: "Rails", value: 13},
+      { key: "react", text: "React", value: 14 },
+      { key: "repair", text: "Kitchen Repair", value: 15},
+      { key: "ruby", text: "Ruby", value: 16},
+      { key: "ui", text: "UI Design", value: 17 },
+      { key: "ux", text: "User Experience", value: 18 },
   ];
 
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.userProfile.userProfile);
   const [isVisible, setIsVisible] = useState(true);
+  const [skills, setskills] = useState([]);
   const [userDetails, setUserDetails] = useState({
+    username: props.data,
     fullName: "",
     aadharNo: "",
     college: "",
     contactNo: "",
     highestQualification: "",
-    skills: "",
+    skills: [],
     yearOfExperience: "",
     pastEmployer: "",
     address: "",
@@ -54,7 +57,10 @@ const PersonalInfo = (props) => {
   }, []);
 
   const handleOnUpdate = () => {
+    dispatch(updateUser(userDetails));
+    notify();
     console.log(userDetails);
+    setIsVisible(true);
   };
 
   const handleOnEdit = () => {
@@ -76,6 +82,19 @@ const PersonalInfo = (props) => {
     console.log(userDetails);
   };
 
+  const notify = () => {
+    toast.success("Profile Details Updated", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   return (
     <div
       className="ui card"
@@ -87,6 +106,17 @@ const PersonalInfo = (props) => {
         width: "100%",
       }}
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        theme="light"
+      />
       <Header
         as="h2"
         style={{ width: "100%", padding: "10px", alignItems: "center" }}
@@ -107,14 +137,18 @@ const PersonalInfo = (props) => {
             label="Full Name"
             placeholder="Full Name"
             defaultValue={userProfile.fullName}
-            onChange={(e) => setUserDetails({...userDetails, fullName: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, fullName: e.target.value })
+            }
             disabled={isVisible}
           />
           <Form.Input
             label="Aadhar Number"
             placeholder="Aadhar Number"
             defaultValue={userProfile.aadharNo}
-            onChange={(e) => setUserDetails({...userDetails, aadharNo: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, aadharNo: e.target.value })
+            }
             disabled={isVisible}
           />
         </Form.Group>
@@ -123,7 +157,9 @@ const PersonalInfo = (props) => {
             label="College Name"
             placeholder="College Name"
             defaultValue={userProfile.college}
-            onChange={(e) => setUserDetails({...userDetails, college: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, college: e.target.value })
+            }
             disabled={isVisible}
           />
           <Form.Input
@@ -131,7 +167,9 @@ const PersonalInfo = (props) => {
             placeholder="Contact Number"
             type="tel"
             defaultValue={userProfile.contactNo}
-            onChange={(e) => setUserDetails({...userDetails, contactNo: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, contactNo: e.target.value })
+            }
             disabled={isVisible}
           />
         </Form.Group>
@@ -140,7 +178,9 @@ const PersonalInfo = (props) => {
             label="Address"
             placeholder="Address"
             defaultValue={userProfile.address}
-            onChange={(e) => setUserDetails({...userDetails, address: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, address: e.target.value })
+            }
             disabled={isVisible}
           />
           <Form.Input
@@ -148,7 +188,10 @@ const PersonalInfo = (props) => {
             placeholder="Highest Qualification"
             defaultValue={userProfile.highestQualification}
             onChange={(e) =>
-              setUserDetails({...userDetails, highestQualification: e.target.value })
+              setUserDetails({
+                ...userDetails,
+                highestQualification: e.target.value,
+              })
             }
             disabled={isVisible}
           />
@@ -160,8 +203,14 @@ const PersonalInfo = (props) => {
             placeholder="Skills"
             multiple
             selection
+            search
             options={options}
             disabled={isVisible}
+            onChange={(e, { value }) => {
+              setskills(skills => [...skills,value]);
+              setUserDetails({ ...userDetails, skills: skills.at(skills.length - 1) })
+            }
+          }
           />
           <Form.Input
             label="Years Of Experience"
@@ -169,7 +218,10 @@ const PersonalInfo = (props) => {
             type="number"
             defaultValue={userProfile.yearOfExperience}
             onChange={(e) =>
-              setUserDetails({...userDetails, yearOfExperience: e.target.value })
+              setUserDetails({
+                ...userDetails,
+                yearOfExperience: e.target.value,
+              })
             }
             disabled={isVisible}
           />
@@ -180,7 +232,9 @@ const PersonalInfo = (props) => {
             label="Past Employer (If any)"
             placeholder="Past Employer"
             defaultValue={userProfile.pastEmployer}
-            onChange={(e) => setUserDetails({...userDetails, pastEmployer: e.target.value })}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, pastEmployer: e.target.value })
+            }
             disabled={isVisible}
           />
           <Form.Input

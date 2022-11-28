@@ -14,36 +14,32 @@ import {
 } from "semantic-ui-react";
 import { fetchAppliedJobs } from "../redux/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchJobs } from "../redux/employer/employerjobSlice";
 
-const AppliedJobs = (props) => {
+const AllPostedJobs = (props) => {
   const dispatch = useDispatch();
-  const job = useSelector((state) => state.job.userJob);
+  const job = useSelector((state) => state.employerJob.jobs);
   useEffect(() => {
     if (props.data.length) {
-      dispatch(fetchAppliedJobs(props.data));
+      dispatch(fetchJobs());
     }
   }, []);
   return (
     <Table basic padded>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell singleLine>Company</Table.HeaderCell>
           <Table.HeaderCell>Job Title</Table.HeaderCell>
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Skills Required</Table.HeaderCell>
+          <Table.HeaderCell>Experience Required</Table.HeaderCell>
           <Table.HeaderCell>Status</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-        {job.map((item) => {
+        {job.length>0 ? job.map((item) => {
           return (
             <Table.Row>
-              <Table.Cell verticalAlign="middle">
-                <Header as="h2" textAlign="center">
-                  <Image src={axisLogo} rounded size="huge" />
-                </Header>
-              </Table.Cell>
               <Table.Cell singleLine verticalAlign="middle">
                 {item.jobTitle}
               </Table.Cell>
@@ -55,15 +51,18 @@ const AppliedJobs = (props) => {
                 <Label style={{ margin: "1px" }}>Spring Boot</Label>
                 <Label style={{ margin: "1px" }}>AWS</Label>
               </Table.Cell>
-              <Table.Cell positive textAlign="right" verticalAlign="middle">
-                Applied
+              <Table.Cell verticalAlign="middle">
+                {item.expRequired}
+              </Table.Cell>
+              <Table.Cell verticalAlign="middle">
+                {item.jobStatus}
               </Table.Cell>
             </Table.Row>
           );
-        })}
+        }):<>No Job Posted yet!</>}
       </Table.Body>
     </Table>
   );
 };
 
-export default AppliedJobs;
+export default AllPostedJobs;

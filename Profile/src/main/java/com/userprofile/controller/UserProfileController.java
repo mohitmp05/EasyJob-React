@@ -25,9 +25,9 @@ public class UserProfileController {
         return ResponseEntity.ok(profileService.viewProfileById(username));
     }
 
-    @PutMapping("/update/{username}")
-    public ResponseEntity<UserProfile> updateProfile(@PathVariable("username") String username, @RequestBody UserProfile profile) {
-        return ResponseEntity.ok(profileService.updateUser(username, profile));
+    @PutMapping("/update")
+    public ResponseEntity<UserProfile> updateProfile( @RequestBody UserProfile profile) {
+        return ResponseEntity.ok(profileService.updateUser(profile));
     }
 
     @GetMapping("/appliedJobs/{username}")

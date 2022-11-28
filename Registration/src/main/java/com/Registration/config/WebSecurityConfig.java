@@ -55,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/user/register")
                 .permitAll()
+                .antMatchers("/employer").hasAuthority("EMPLOYER")
+                .antMatchers("/job/addjob").hasAuthority("EMPLOYER")
                 .anyRequest()
                 .authenticated()
                 .and()
