@@ -25,43 +25,92 @@ const AllPostedJobs = (props) => {
     }
   }, []);
   return (
-    <Table basic padded>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Job Title</Table.HeaderCell>
-          <Table.HeaderCell>Description</Table.HeaderCell>
-          <Table.HeaderCell>Skills Required</Table.HeaderCell>
-          <Table.HeaderCell>Experience Required</Table.HeaderCell>
-          <Table.HeaderCell>Status</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        {job.length>0 ? job.map((item) => {
-          return (
+    <>
+      <Header
+        as="h2"
+        style={{ width: "100%", padding: "10px", alignItems: "center" }}
+      >
+        <Header.Content>Posted Jobs</Header.Content>
+        <hr />
+      </Header>
+      <div
+        style={{
+          overflowY: "scroll",
+          maxHeight: "350px",
+          paddingTop: "10px",
+          paddingBottom: "10px",
+        }}
+      >
+        <Table basic padded>
+          <Table.Header>
             <Table.Row>
-              <Table.Cell singleLine verticalAlign="middle">
-                {item.jobTitle}
-              </Table.Cell>
-              <Table.Cell verticalAlign="middle">
-                {item.jobDescription}
-              </Table.Cell>
-              <Table.Cell verticalAlign="middle">
-                <Label style={{ margin: "1px" }}>Java</Label>
-                <Label style={{ margin: "1px" }}>Spring Boot</Label>
-                <Label style={{ margin: "1px" }}>AWS</Label>
-              </Table.Cell>
-              <Table.Cell verticalAlign="middle">
-                {item.expRequired}
-              </Table.Cell>
-              <Table.Cell verticalAlign="middle">
-                {item.jobStatus}
-              </Table.Cell>
+              <Table.HeaderCell singleLine>Job Title</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell>Skills Required</Table.HeaderCell>
+              <Table.HeaderCell>Experience Required</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
             </Table.Row>
-          );
-        }):<>No Job Posted yet!</>}
-      </Table.Body>
-    </Table>
+          </Table.Header>
+
+          <Table.Body>
+            {job.length > 0 ? (
+              job.map((item) => {
+                return (
+                  <Table.Row verticalAlign="top">
+                    <Table.Cell singleLine verticalAlign="middle">
+                      {item.jobTitle}
+                    </Table.Cell>
+                    <Table.Cell verticalAlign="middle">
+                      {item.jobDescription}
+                    </Table.Cell>
+                    <Table.Cell
+                      verticalAlign="middle"
+                      width="2"
+                      textAlign="center"
+                    >
+                      <Label style={{ margin: "1px" }}>Java</Label>
+                      <Label style={{ margin: "1px" }}>Spring Boot</Label>
+                      <Label style={{ margin: "1px" }}>AWS</Label>
+                    </Table.Cell>
+                    <Table.Cell
+                      verticalAlign="middle"
+                      width="3"
+                      textAlign="center"
+                    >
+                      {item.expRequired}
+                    </Table.Cell>
+                    <Table.Cell verticalAlign="middle" width="2">
+                      {item.jobStatus}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                  alignItems: "center",
+                }}
+              >
+                <Header
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  No Job Posted Yet.
+                </Header>
+              </div>
+            )}
+          </Table.Body>
+        </Table>
+          
+      </div>
+        
+    </>
   );
 };
 

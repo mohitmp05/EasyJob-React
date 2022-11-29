@@ -9,12 +9,18 @@ const initialState = {
   
 };
 
-
 export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
   const response = await axios
     .get("http://localhost:7071/user/getuser", {
       headers: { Authorization: `Bearer ${token}` },
     })
+  return response.data;
+});
+
+export const applyJob = createAsyncThunk("user/applyJob", async (job) => {
+  const response = await axios
+    .put("http://localhost:7072/profile/applyjob",job)
+    console.log(response.data)
   return response.data;
 });
 

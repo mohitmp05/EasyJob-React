@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
 
 @Entity
 @AllArgsConstructor
@@ -18,8 +19,9 @@ public class UserJobs {
     private int jobId;
     private String username;
     private String jobTitle;
+    private String companyName;
     private String jobDescription;
-    private String skillsRequired;
+    private ArrayList skillsRequired;
     private boolean applyStatus;
 
 }

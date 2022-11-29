@@ -33,7 +33,11 @@ const employerjobSlice = createSlice({
     });
     builder.addCase(fetchJobs.fulfilled, (state, action) => {
       state.loading = false;
-      state.jobs = action.payload;
+      if (typeof action.payload ==="string") {
+        state.jobs=[];
+      }else{
+        state.jobs = action.payload;
+      }
       state.error = "";
     });
     builder.addCase(fetchJobs.rejected, (state, action) => {

@@ -41,8 +41,9 @@ public class UserProfileServiceImpl {
         return userJobsRepo.findByUsername(username);
     }
 
-    public UserJobs postJob(UserJobs job){
-        return userJobsRepo.save(job);
+    public String applyJob(UserJobs job){
+        userJobsRepo.save(job);
+        return "Job Applied";
     }
 
 //    public FileDB store(MultipartFile file) throws IOException {

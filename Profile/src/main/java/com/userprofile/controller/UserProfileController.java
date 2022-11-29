@@ -35,9 +35,9 @@ public class UserProfileController {
         return ResponseEntity.ok(profileService.getAppliedJobs(username));
     }
 
-    @PutMapping("/addJob")
-    public ResponseEntity<UserJobs> addJob(@RequestBody UserJobs job) {
-        return ResponseEntity.ok(profileService.postJob(job));
+    @PutMapping("/applyjob")
+    public ResponseEntity addJob(@RequestBody UserJobs job) {
+        return ResponseEntity.ok(profileService.applyJob(job));
     }
 }
 

@@ -6,6 +6,7 @@ import {
   Divider,
   Dropdown,
   Form,
+  FormGroup,
   Header,
   Icon,
 } from "semantic-ui-react";
@@ -21,30 +22,30 @@ const AddJob = (props) => {
     { key: "css", text: "CSS", value: 2 },
     { key: "design", text: "Graphic Design", value: 3 },
     { key: "ember", text: "Ember", value: 4 },
-    { key: "html", text: "HTML", value:5},
+    { key: "html", text: "HTML", value: 5 },
     { key: "ia", text: "Information Architecture", value: 6 },
-    { key: "javascript", text: "Javascript", value:7},
-    { key: "mech", text: "Mechanical Engineering", value: 8},
+    { key: "javascript", text: "Javascript", value: 7 },
+    { key: "mech", text: "Mechanical Engineering", value: 8 },
     { key: "meteor", text: "Meteor", value: 9 },
-    { key: "node", text: "NodeJS", value:10 },
+    { key: "node", text: "NodeJS", value: 10 },
     { key: "plumbing", text: "Plumbing", value: 11 },
-    { key: "python", text: "Python", value:12 },
-    { key: "rails", text: "Rails", value: 13},
+    { key: "python", text: "Python", value: 12 },
+    { key: "rails", text: "Rails", value: 13 },
     { key: "react", text: "React", value: 14 },
-    { key: "repair", text: "Kitchen Repair", value: 15},
-    { key: "ruby", text: "Ruby", value: 16},
+    { key: "repair", text: "Kitchen Repair", value: 15 },
+    { key: "ruby", text: "Ruby", value: 16 },
     { key: "ui", text: "UI Design", value: 17 },
     { key: "ux", text: "User Experience", value: 18 },
-];
+  ];
 
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.userProfile.userProfile);
   const [skills, setskills] = useState([]);
-  const [job,setJob] = useState({
-    jobTitle:"",
-    jobDescription:"",
-    skillsRequired:[],
-    expRequired:"",
+  const [job, setJob] = useState({
+    jobTitle: "",
+    jobDescription: "",
+    skillsRequired: [],
+    expRequired: "",
   });
 
   useEffect(() => {
@@ -82,17 +83,6 @@ const AddJob = (props) => {
         width: "100%",
       }}
     >
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        theme="light"
-      />
       <Header
         as="h2"
         style={{ width: "100%", padding: "10px", alignItems: "center" }}
@@ -105,27 +95,19 @@ const AddJob = (props) => {
         style={{ width: "85%", padding: "10px" }}
         onSubmit={handlePostJob}
       >
-        <Form.Group widths={2} style={{padding:'15px'}}>
           <Form.Input
             label="Job Title"
             placeholder="Job Title"
-            onChange={(e) =>
-              setJob({ ...job, jobTitle: e.target.value })
-            }
-        
+            onChange={(e) => setJob({ ...job, jobTitle: e.target.value })}
           />
-          <Form.Input
+          
+
+        <Form.TextArea
             label="Job Description"
             placeholder="Job Description"
-            type="textarea"
-
-            onChange={(e) =>
-             setJob({ ...job, jobDescription: e.target.value })
-            }
-          
+            onChange={(e) => setJob({ ...job, jobDescription: e.target.value })}
           />
-        </Form.Group>
-        <Form.Group widths={2} style={{padding:'15px'}}>
+        <Form.Group widths={2} >
           <Form.Dropdown
             label="Skills Required"
             placeholder="Skills Required"
@@ -133,29 +115,40 @@ const AddJob = (props) => {
             selection
             search
             options={options}
-           
             onChange={(e, { value }) => {
               setskills((skills) => [...skills, value]);
-              setJob({ ...job, skillsRequired: skills.at(skills.length - 1) })
+              setJob({ ...job, skillsRequired: skills.at(skills.length - 1) });
             }}
           />
           <Form.Input
             label="Experience Required"
             placeholder="Experience Required"
             type="number"
-           
-            onChange={(e) =>
-              setJob({ ...job, expRequired: e.target.value })
-            }
+            onChange={(e) => setJob({ ...job, expRequired: e.target.value })}
           />
         </Form.Group>
         <Button
-          style={{ backgroundColor: "#6c63ff", color: "white" , marginLeft:'12px'}}
+          style={{
+            backgroundColor: "#6c63ff",
+            color: "white",
+            marginBottom: "12px",
+          }}
           type="submit"
         >
           Submit
         </Button>
       </Form>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        theme="light"
+      />
     </div>
   );
 };

@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/user")
@@ -31,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     private AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 
@@ -61,5 +65,4 @@ public class UserController {
         String username = ((UserDetails)auth).getUsername();
         return ResponseEntity.ok(userDetailsService.findUserDetails(username));
     }
-
 }

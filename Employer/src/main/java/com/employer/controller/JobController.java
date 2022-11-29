@@ -43,5 +43,10 @@ public class JobController {
     public ResponseEntity getFalseJobsByStatus() throws Exception {
         return ResponseEntity.ok(empService.getFalseJobsByStatus());
     }
+
+//    @GetMapping("/getjob/{id}")
+//    public ResponseEntity findJobById (@PathVariable int id){
+//        return ResponseEntity.ok(empService.findJobById(id));
+//    }
     
 }

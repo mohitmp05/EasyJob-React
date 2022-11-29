@@ -34,7 +34,7 @@ const EmployerInfo = (props) => {
     >
       <Header
         as="h2"
-        style={{ width: "100%", padding: "10px", alignItems: "center" }}
+        style={{ width: "100%", padding: "10px", alignItems: "center",position:'absolute',top:'0'}}
       >
         <Header.Content>Organization Information</Header.Content>
         <hr />

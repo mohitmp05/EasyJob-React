@@ -60,6 +60,10 @@ public class EmployerService {
          return "deleted";
     }
 
+    public Job findJobById (int id){
+        return jobRepo.findById(id).orElse(null);
+    }
+
     //Employer
     public EmployerProfile addEmpDetails(EmployerProfile emp){
         return empRepo.save(emp);

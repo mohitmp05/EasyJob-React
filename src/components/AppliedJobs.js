@@ -27,7 +27,6 @@ const AppliedJobs = (props) => {
     <Table basic padded>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell singleLine>Company</Table.HeaderCell>
           <Table.HeaderCell>Job Title</Table.HeaderCell>
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Skills Required</Table.HeaderCell>
@@ -39,11 +38,6 @@ const AppliedJobs = (props) => {
         {job.map((item) => {
           return (
             <Table.Row>
-              <Table.Cell verticalAlign="middle">
-                <Header as="h2" textAlign="center">
-                  <Image src={axisLogo} rounded size="huge" />
-                </Header>
-              </Table.Cell>
               <Table.Cell singleLine verticalAlign="middle">
                 {item.jobTitle}
               </Table.Cell>

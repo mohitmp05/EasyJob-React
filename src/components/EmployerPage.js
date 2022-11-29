@@ -19,10 +19,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Jobs from "./Jobs";
 import PersonalInfo from "./PersonalInfo";
-import { addEmployerDetails, fetchEmployer } from "../redux/employer/employerSlice";
+import {
+  addEmployerDetails,
+  fetchEmployer,
+} from "../redux/employer/employerSlice";
 import AddJob from "./AddJob";
 import AllJobs from "./AllJobs";
 import AllPostedJobs from "./AllPostedJobs";
+import Applicants from "./Applicants";
 
 const EmployerPage = (props) => {
   const navigate = useNavigate();
@@ -112,7 +116,7 @@ const EmployerPage = (props) => {
               }}
             >
               <i
-                class="briefcase icon"
+                class="add square icon"
                 style={{ color: "#6c63ff", paddingRight: "10px" }}
               ></i>
               <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
@@ -139,7 +143,7 @@ const EmployerPage = (props) => {
               }}
             >
               <i
-                class="help circle icon"
+                class="briefcase icon"
                 style={{ color: "#6c63ff", paddingRight: "10px" }}
               ></i>
               <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
@@ -149,7 +153,40 @@ const EmployerPage = (props) => {
           </a>
         </Menu.Item>
       ),
-      render: () => <AllPostedJobs data={props.data} />,
+      render: () =>         <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
+      <AllPostedJobs data={props.data} />
+    </Tab.Pane>,
+    },
+    {
+      menuItem: (
+        <Menu.Item>
+          <a
+            class="item"
+            style={{ border: "0px", padding: "0px 0px 0px 10px" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                alignItems: "center",
+              }}
+            >
+              <i
+                class="address card icon"
+                style={{ color: "#6c63ff", paddingRight: "10px" }}
+              ></i>
+              <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
+                View Applicants
+              </span>
+            </div>
+          </a>
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
+          <Applicants data={props.data} />
+        </Tab.Pane>
+      ),
     },
   ];
 
@@ -160,13 +197,19 @@ const EmployerPage = (props) => {
 
   const handleAddDetails = () => {
     setShow(false);
-    dispatch(addEmployerDetails({username:user.user.username,companyName:companyName, ph:ph}))
+    dispatch(
+      addEmployerDetails({
+        username: user.user.username,
+        companyName: companyName,
+        ph: ph,
+      })
+    );
   };
   return (
     <div style={{ padding: "10px", marginLeft: "20px" }}>
-      {employer.length<1 ? (
+      {employer.length < 1 ? (
         <Modal show={show} onHide={show}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title>Add Organization Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -176,14 +219,22 @@ const EmployerPage = (props) => {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Company Name</Form.Label>
-                <Form.Control type="text" autoFocus onChange={(e)=>setCompanyName(e.target.value)}/>
+                <Form.Control
+                  type="text"
+                  autoFocus
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
               </Form.Group>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Phone Number</Form.Label>
-                <Form.Control type="text" autoFocus onChange={(e)=>setPh(e.target.value)}/>
+                <Form.Control
+                  type="text"
+                  autoFocus
+                  onChange={(e) => setPh(e.target.value)}
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
