@@ -12,16 +12,15 @@ import {
   Rating,
   Label,
 } from "semantic-ui-react";
-import { fetchAppliedJobs } from "../redux/job/jobSlice";
+import { fetchActiveJobs } from "../redux/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs } from "../redux/employer/employerjobSlice";
 
-const AllPostedJobs = (props) => {
+const ListedJobs = (props) => {
   const dispatch = useDispatch();
-  const job = useSelector((state) => state.employerJob.jobs);
+  const activeJobs = useSelector((state) => state.job.activeJobs);
   useEffect(() => {
     if (props.data.length) {
-      dispatch(fetchJobs());
+      dispatch(fetchActiveJobs());
     }
   }, []);
   const options = [
@@ -50,7 +49,7 @@ const AllPostedJobs = (props) => {
         as="h2"
         style={{ width: "100%", padding: "10px", alignItems: "center" }}
       >
-        <Header.Content>Posted Jobs</Header.Content>
+        <Header.Content>Listed Jobs</Header.Content>
         <hr />
       </Header>
       <div
@@ -73,8 +72,8 @@ const AllPostedJobs = (props) => {
           </Table.Header>
 
           <Table.Body>
-            {job.length > 0 ? (
-              job.map((item) => {
+            {activeJobs.length > 0 ? (
+              activeJobs.map((item) => {
                 return (
                   <Table.Row verticalAlign="top">
                     <Table.Cell singleLine verticalAlign="middle">
@@ -142,4 +141,4 @@ const AllPostedJobs = (props) => {
   );
 };
 
-export default AllPostedJobs;
+export default ListedJobs;

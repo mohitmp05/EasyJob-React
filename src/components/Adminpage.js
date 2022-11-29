@@ -13,10 +13,24 @@ import {
   HeaderSubheader,
 } from "semantic-ui-react";
 import { fetchUser } from "../redux/user/userSlice";
+import EmployerInfo from "./EmployerInfo";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Jobs from "./Jobs";
 import PersonalInfo from "./PersonalInfo";
+import {
+  addEmployerDetails,
+  fetchEmployer,
+} from "../redux/employer/employerSlice";
+import AddJob from "./AddJob";
+import AllJobs from "./AllJobs";
+import AllPostedJobs from "./AllPostedJobs";
+import Applicants from "./Applicants";
+import UnlistedJobs from "./UnlistedJobs";
+import ListedJobs from "./ListedJobs";
 
-const Userpage = (props) => {
+const Adminpage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -60,34 +74,6 @@ const Userpage = (props) => {
         </div>
       ),
     },
-
-    {
-      menuItem: (
-        <Menu.Item>
-          <a
-            class="item"
-            style={{ border: "0px", padding: "0px 0px 0px 10px" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                alignItems: "center",
-              }}
-            >
-              <i
-                class="user icon"
-                style={{ color: "#6c63ff", paddingRight: "10px" }}
-              ></i>
-              <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
-                Profile
-              </span>
-            </div>
-          </a>
-        </Menu.Item>
-      ),
-      render: () => <PersonalInfo data={user.user.username} />,
-    },
     {
       menuItem: (
         <Menu.Item>
@@ -107,13 +93,18 @@ const Userpage = (props) => {
                 style={{ color: "#6c63ff", paddingRight: "10px" }}
               ></i>
               <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
-                Jobs
+                View Unlisted Jobs
               </span>
             </div>
           </a>
         </Menu.Item>
       ),
-      render: () => <Jobs data={user.user.username} />,
+      render: () => (
+        <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
+          <UnlistedJobs data={props.data} />
+        </Tab.Pane>
+        
+      ),
     },
     {
       menuItem: (
@@ -130,49 +121,58 @@ const Userpage = (props) => {
               }}
             >
               <i
-                class="help circle icon"
+                class="address card icon"
                 style={{ color: "#6c63ff", paddingRight: "10px" }}
               ></i>
               <span style={{ paddingTop: "3px", paddingLeft: "10px" }}>
-                Help
+                Listed Jobs
               </span>
             </div>
           </a>
         </Menu.Item>
       ),
-      render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>,
+      render: () => (
+        <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
+          <ListedJobs data={props.data} />
+        </Tab.Pane>
+      ),
     },
   ];
-
   return (
-    <div style={{ padding: "10px", marginLeft: "20px" }}>
-      <Grid columns={1} divided stretched>
-        <Grid.Row stretched>
-          <Grid.Column>
-            <Segment
-              style={{
-                paddingTop: "50px",
-                paddingBottom: "50px",
-                paddingRight: "30px",
-                borderRadius: "7px",
-              }}
-            >
-              <Tab
-                menu={{
-                  fluid: true,
-                  vertical: true,
-                  tabular: true,
-                  secondary: true,
-                  pointing: true,
-                }}
-                panes={panes}
-              />
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
+    <>
+      {user.user.role === "ADMIN" ? (
+        <div style={{ padding: "10px", marginLeft: "20px" }}>
+          <Grid columns={1} divided stretched>
+            <Grid.Row stretched>
+              <Grid.Column>
+                <Segment
+                  style={{
+                    paddingTop: "50px",
+                    paddingBottom: "50px",
+                    paddingRight: "30px",
+                    borderRadius: "7px",
+                  }}
+                >
+                  <Tab
+                    menu={{
+                      fluid: true,
+                      vertical: true,
+                      tabular: true,
+                      secondary: true,
+                      pointing: true,
+                    }}
+                    panes={panes}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+      ) : (
+        <h1>You are not Admin!</h1>
+      )}
+    </>
   );
 };
 
-export default Userpage;
+export default Adminpage;

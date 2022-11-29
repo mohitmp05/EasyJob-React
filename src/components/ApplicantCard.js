@@ -15,7 +15,7 @@ const ApplicantCard = (props) => {
     jobId: 0,
     username: username,
     jobTitle: "",
-    companyName:"",
+    companyName: "",
     jobDescription: "",
     skillsRequired: [],
     applyStatus: false,
@@ -24,18 +24,18 @@ const ApplicantCard = (props) => {
   const handleOnView = () => {
     setShow(true);
     const newJobs = () => {
-        return {
-          ...job,
-          jobId: props.recommendedJobs.jobId,
-          jobTitle: props.recommendedJobs.jobTitle,
-          companyName: props.recommendedJobs.companyName,
-          jobDescription: props.recommendedJobs.jobDescription,
-          skillsRequired: props.recommendedJobs.skillsRequired,
-          applyStatus: false,
-        };
+      return {
+        ...job,
+        jobId: props.recommendedJobs.jobId,
+        jobTitle: props.recommendedJobs.jobTitle,
+        companyName: props.recommendedJobs.companyName,
+        jobDescription: props.recommendedJobs.jobDescription,
+        skillsRequired: props.recommendedJobs.skillsRequired,
+        applyStatus: false,
       };
-      setJob(newJobs);
-      console.log(job)
+    };
+    setJob(newJobs);
+    console.log(job);
   };
 
   const handleOnApply = () => {
@@ -60,6 +60,27 @@ const ApplicantCard = (props) => {
       theme: "light",
     });
   };
+
+  const options = [
+    { key: "angular", text: "Angular", value: 1 },
+    { key: "css", text: "CSS", value: 2 },
+    { key: "design", text: "Graphic Design", value: 3 },
+    { key: "ember", text: "Ember", value: 4 },
+    { key: "html", text: "HTML", value: 5 },
+    { key: "ia", text: "Information Architecture", value: 6 },
+    { key: "javascript", text: "Javascript", value: 7 },
+    { key: "mech", text: "Mechanical Engineering", value: 8 },
+    { key: "meteor", text: "Meteor", value: 9 },
+    { key: "node", text: "NodeJS", value: 10 },
+    { key: "plumbing", text: "Plumbing", value: 11 },
+    { key: "python", text: "Python", value: 12 },
+    { key: "rails", text: "Rails", value: 13 },
+    { key: "react", text: "React", value: 14 },
+    { key: "repair", text: "Kitchen Repair", value: 15 },
+    { key: "ruby", text: "Ruby", value: 16 },
+    { key: "ui", text: "UI Design", value: 17 },
+    { key: "ux", text: "User Experience", value: 18 },
+  ];
 
   return (
     <>
@@ -100,24 +121,17 @@ const ApplicantCard = (props) => {
           </div>
 
           <Card.Description style={{ marginTop: "15px" }}>
-            <Label
-              as="a"
-              content="Mail"
-              icon="mail"
-              style={{ paddingTop: "5px" }}
-            />
-            <Label
-              as="a"
-              content="Mail"
-              icon="mail"
-              style={{ paddingTop: "5px" }}
-            />
-            <Label
-              as="a"
-              content="Mail"
-              icon="mail"
-              style={{ paddingTop: "5px" }}
-            />
+            {props.recommendedJobs.skillsRequired.map((itm) => {
+              return options.map((item) => {
+                return item.value === itm ? (
+                  <Label
+                    as="a"
+                    content={item.text}
+                    style={{ paddingTop: "5px" }}
+                  />
+                ) : null;
+              });
+            })}
 
             <Button basic color="green" floated="right" onClick={handleOnView}>
               View
@@ -169,24 +183,17 @@ const ApplicantCard = (props) => {
               </div>
 
               <Card.Description style={{ marginTop: "15px" }}>
-                <Label
-                  as="a"
-                  content="Mail"
-                  icon="mail"
-                  style={{ paddingTop: "5px" }}
-                />
-                <Label
-                  as="a"
-                  content="Mail"
-                  icon="mail"
-                  style={{ paddingTop: "5px" }}
-                />
-                <Label
-                  as="a"
-                  content="Mail"
-                  icon="mail"
-                  style={{ paddingTop: "5px" }}
-                />
+                {props.recommendedJobs.skillsRequired.map((itm) => {
+                  return options.map((item) => {
+                    return item.value === itm ? (
+                      <Label
+                        as="a"
+                        content={item.text}
+                        style={{ paddingTop: "5px" }}
+                      />
+                    ) : null;
+                  });
+                })}
               </Card.Description>
             </Card.Content>
           </Card>

@@ -4,7 +4,7 @@ import register from "../images/register-logo.svg";
 import { Button, Form, Input } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/register/registerSlice";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
@@ -20,13 +20,21 @@ const Register = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.register.user);
   const handleOnSubmit = () => {
-    if(role === ""){
+    if (role === "") {
       setMsg("Please Select a Role");
-    }
-    else if (password === repassword) {
-        dispatch(registerUser({username:username,email:email,password:password,role:role}))
-        navigate('/login',{state:{username:user.username,email:user.email,role:user.role}});
-        notify();
+    } else if (password === repassword) {
+      dispatch(
+        registerUser({
+          username: username,
+          email: email,
+          password: password,
+          role: role,
+        })
+      );
+      navigate("/login", {
+        state: { username: user.username, email: user.email, role: user.role },
+      });
+      notify();
     } else {
       setMsg("Password doesn't match, Try again!");
     }
@@ -44,11 +52,11 @@ const Register = () => {
     });
   };
 
-  useEffect(()=>{
-    document.title= "Register | EasyJob"
-  })
+  useEffect(() => {
+    document.title = "Register | EasyJob";
+  });
   return (
-    <section style={{ backgroundColor: "#eee", padding:"95px" }}>
+    <section style={{ backgroundColor: "#eee", padding: "95px" }}>
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">

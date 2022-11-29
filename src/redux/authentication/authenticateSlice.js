@@ -9,20 +9,6 @@ const initialState = {
 
 export const authenticateUser = createAsyncThunk(
   "authentication/authenticateUser",
-  // () => {
-  //   localStorage.setItem(
-  //     "jwt",
-  //     JSON.stringify(
-  //       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb2hpdDEyMyIsImV4cCI6MTY2OTU2MTY1NywiaWF0IjoxNjY5NTI1NjU3fQ.VZ-vFE-Rek9oclwQz_PH0BJtuBGzbIQyKXwORG4ZUO0"
-  //     )
-  //   );
-  //   return {
-  //     email: "mohit@123",
-  //     password: "123",
-  //     role: "EMPLOYER",
-  //     username: "mohit123",
-  //   };
-  // }
   (user) => {
     return axios
       .post("http://localhost:7071/user/authenticate", user)

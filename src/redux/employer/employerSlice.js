@@ -4,25 +4,34 @@ import axios from "axios";
 const initialState = {
   loading: false,
   employer: [],
-  error: "",  
+  error: "",
 };
 
-
-export const fetchEmployer = createAsyncThunk("employer/fetchEmployer", async (token) => {
-  const response = await axios
-    .get("http://localhost:7071/employer/getemp",{
+export const fetchEmployer = createAsyncThunk(
+  "employer/fetchEmployer",
+  async (token) => {
+    const response = await axios.get("http://localhost:7071/employer/getemp", {
       headers: { Authorization: `Bearer ${token}` },
-    })
-  return response.data;
-});
+    });
+    return response.data;
+  }
+);
 
-export const addEmployerDetails = createAsyncThunk("employer/addEmployerDetails", async (employer) => {
-  const response = await axios
-    .put("http://localhost:7071/employer/addempdetails",employer,{
-      headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}` },
-    })
-  return response.data;
-});
+export const addEmployerDetails = createAsyncThunk(
+  "employer/addEmployerDetails",
+  async (employer) => {
+    const response = await axios.put(
+      "http://localhost:7071/employer/addempdetails",
+      employer,
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
 
 const employerSlice = createSlice({
   name: "employer",

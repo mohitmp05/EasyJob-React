@@ -44,9 +44,11 @@ public class JobController {
         return ResponseEntity.ok(empService.getFalseJobsByStatus());
     }
 
-//    @GetMapping("/getjob/{id}")
-//    public ResponseEntity findJobById (@PathVariable int id){
-//        return ResponseEntity.ok(empService.findJobById(id));
-//    }
+    @PutMapping("/verifyjob/{jobId}")
+    public String verifyJob (@PathVariable int jobId) {
+        return empService.verifyJob(jobId);
+    }
+
+
     
 }

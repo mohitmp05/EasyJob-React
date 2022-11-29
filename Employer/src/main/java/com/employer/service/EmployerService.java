@@ -73,13 +73,11 @@ public class EmployerService {
         return empRepo.findById(username).orElse(null);
     }
 
-//	public String test() {
-//		// TODO Auto-generated method stub
-//		Job j=new Job(1L,"Developer","chennai 2lpa ","java spring",3,false,"Sriram","Sri Tech");
-//		EmployerProfile e=new EmployerProfile("Sriram","Sri Tech",7448867464l,"mailtosriram2000@gmail.com","111");
-//		addJob(j);
-//		addEmp(e);
-//
-//		return "sucess";
-//	}
+    public String verifyJob (int jobId){
+        Job job = jobRepo.findById(jobId).orElse(null);
+        job.setJobStatus(true);
+        jobRepo.save(job);
+        return "Job Verified!";
+    }
+
 }

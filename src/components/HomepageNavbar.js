@@ -9,7 +9,7 @@ function HomepageNavbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logout())
+    dispatch(logout());
     localStorage.setItem("jwt", JSON.stringify(""));
     localStorage.setItem("user", JSON.stringify(""));
     navigate("/");
@@ -20,7 +20,10 @@ function HomepageNavbar() {
         <img src={logo} alt="logo" style={{ width: "25%", height: "25%" }} />
       </Menu.Item>
 
-      <Menu.Menu position="right" style={{marginRight:"15px", fontSize:"16px"}}>
+      <Menu.Menu
+        position="right"
+        style={{ marginRight: "15px", fontSize: "16px" }}
+      >
         <Menu.Item
           name="logout"
           onClick={handleLogout}

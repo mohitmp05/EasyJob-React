@@ -9,28 +9,31 @@ import {
   Header,
   Icon,
 } from "semantic-ui-react";
-import { fetchProfile, updateUser } from "../redux/userProfile/userProfileSlice";
+import {
+  fetchProfile,
+  updateUser,
+} from "../redux/userProfile/userProfileSlice";
 
 const PersonalInfo = (props) => {
   const options = [
-      { key: "angular", text: "Angular", value: 1 },
-      { key: "css", text: "CSS", value: 2 },
-      { key: "design", text: "Graphic Design", value: 3 },
-      { key: "ember", text: "Ember", value: 4 },
-      { key: "html", text: "HTML", value:5},
-      { key: "ia", text: "Information Architecture", value: 6 },
-      { key: "javascript", text: "Javascript", value:7},
-      { key: "mech", text: "Mechanical Engineering", value: 8},
-      { key: "meteor", text: "Meteor", value: 9 },
-      { key: "node", text: "NodeJS", value:10 },
-      { key: "plumbing", text: "Plumbing", value: 11 },
-      { key: "python", text: "Python", value:12 },
-      { key: "rails", text: "Rails", value: 13},
-      { key: "react", text: "React", value: 14 },
-      { key: "repair", text: "Kitchen Repair", value: 15},
-      { key: "ruby", text: "Ruby", value: 16},
-      { key: "ui", text: "UI Design", value: 17 },
-      { key: "ux", text: "User Experience", value: 18 },
+    { key: "angular", text: "Angular", value: 1 },
+    { key: "css", text: "CSS", value: 2 },
+    { key: "design", text: "Graphic Design", value: 3 },
+    { key: "ember", text: "Ember", value: 4 },
+    { key: "html", text: "HTML", value: 5 },
+    { key: "ia", text: "Information Architecture", value: 6 },
+    { key: "javascript", text: "Javascript", value: 7 },
+    { key: "mech", text: "Mechanical Engineering", value: 8 },
+    { key: "meteor", text: "Meteor", value: 9 },
+    { key: "node", text: "NodeJS", value: 10 },
+    { key: "plumbing", text: "Plumbing", value: 11 },
+    { key: "python", text: "Python", value: 12 },
+    { key: "rails", text: "Rails", value: 13 },
+    { key: "react", text: "React", value: 14 },
+    { key: "repair", text: "Kitchen Repair", value: 15 },
+    { key: "ruby", text: "Ruby", value: 16 },
+    { key: "ui", text: "UI Design", value: 17 },
+    { key: "ux", text: "User Experience", value: 18 },
   ];
 
   const dispatch = useDispatch();
@@ -207,10 +210,12 @@ const PersonalInfo = (props) => {
             options={options}
             disabled={isVisible}
             onChange={(e, { value }) => {
-              setskills(skills => [...skills,value]);
-              setUserDetails({ ...userDetails, skills: skills.at(skills.length - 1) })
-            }
-          }
+              setskills((skills) => [...skills, value]);
+              setUserDetails({
+                ...userDetails,
+                skills: skills.at(skills.length - 1),
+              });
+            }}
           />
           <Form.Input
             label="Years Of Experience"

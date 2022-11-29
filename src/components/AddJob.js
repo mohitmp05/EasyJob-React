@@ -95,19 +95,18 @@ const AddJob = (props) => {
         style={{ width: "85%", padding: "10px" }}
         onSubmit={handlePostJob}
       >
-          <Form.Input
-            label="Job Title"
-            placeholder="Job Title"
-            onChange={(e) => setJob({ ...job, jobTitle: e.target.value })}
-          />
-          
+        <Form.Input
+          label="Job Title"
+          placeholder="Job Title"
+          onChange={(e) => setJob({ ...job, jobTitle: e.target.value })}
+        />
 
         <Form.TextArea
-            label="Job Description"
-            placeholder="Job Description"
-            onChange={(e) => setJob({ ...job, jobDescription: e.target.value })}
-          />
-        <Form.Group widths={2} >
+          label="Job Description"
+          placeholder="Job Description"
+          onChange={(e) => setJob({ ...job, jobDescription: e.target.value })}
+        />
+        <Form.Group widths={2}>
           <Form.Dropdown
             label="Skills Required"
             placeholder="Skills Required"

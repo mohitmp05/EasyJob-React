@@ -6,8 +6,9 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { applyJob } from "../redux/user/userSlice";
 import { toast, ToastContainer } from "react-toastify";
+import { deleteJob, verifyJob } from "../redux/job/jobSlice";
 
-const JobCard = (props) => {
+const UnlistedJobCard = (props) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user.user.username);
@@ -20,6 +21,65 @@ const JobCard = (props) => {
     skillsRequired: [],
     applyStatus: false,
   });
+
+  const handleOnView = () => {
+    setShow(true);
+    const newJobs = () => {
+      return {
+        ...job,
+        jobId: props.pendingJobs.jobId,
+        jobTitle: props.pendingJobs.jobTitle,
+        companyName: props.pendingJobs.companyName,
+        jobDescription: props.pendingJobs.jobDescription,
+        skillsRequired: props.pendingJobs.skillsRequired,
+        applyStatus: false,
+      };
+    };
+    setJob(newJobs);
+    console.log(job);
+  };
+
+  const handleOnVerify = () => {
+    dispatch(verifyJob(job.jobId));
+    notifyonverify();
+    setShow(false);
+  };
+
+  const handleOnDeny = () => {
+    dispatch(deleteJob(job.jobId));
+    notifyondeny();
+    setShow(false);
+  };
+
+  const handleOnClose = () => {
+    setShow(false);
+  };
+
+  const notifyonverify = () => {
+    toast.success("Job Verified", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notifyondeny = () => {
+    toast.info("Job Deleted", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const options = [
     { key: "angular", text: "Angular", value: 1 },
@@ -42,59 +102,19 @@ const JobCard = (props) => {
     { key: "ux", text: "User Experience", value: 18 },
   ];
 
-  const handleOnView = () => {
-    setShow(true);
-    const newJobs = () => {
-      return {
-        ...job,
-        jobId: props.activeJobs.jobId,
-        jobTitle: props.activeJobs.jobTitle,
-        companyName: props.activeJobs.companyName,
-        jobDescription: props.activeJobs.jobDescription,
-        skillsRequired: props.activeJobs.skillsRequired,
-        applyStatus: false,
-      };
-    };
-    setJob(newJobs);
-    console.log(job);
-  };
-
-  const handleOnApply = () => {
-    dispatch(applyJob(job));
-    notify();
-    setShow(false);
-  };
-
-  const handleOnClose = () => {
-    setShow(false);
-  };
-
-  const notify = () => {
-    toast.success("Job Applied Successfully", {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
-
   return (
     <>
       <Card style={{ padding: "10px", width: "80%", marginLeft: "10%" }}>
         <Card.Content>
-          <Card.Header>{props.activeJobs.jobTitle}</Card.Header>
+          <Card.Header>{props.pendingJobs.jobTitle}</Card.Header>
           <div style={{ marginTop: "5px", fontWeight: "600" }}>
-            {props.activeJobs.companyName}
+            {props.pendingJobs.companyName}
           </div>
           <div style={{ color: "#71797E", fontWeight: "600" }}>
             <div style={{ backgroundColor: "transaparent", marginTop: "1px" }}>
               <Icon name="briefcase" />
               <span style={{ fontSize: "12px", paddingLeft: "3px" }}>
-                {props.activeJobs.expRequired} Yrs
+                {props.pendingJobs.expRequired} Yrs
               </span>
             </div>
           </div>
@@ -115,13 +135,13 @@ const JobCard = (props) => {
                   paddingLeft: "3px",
                 }}
               >
-                {props.activeJobs.jobDescription}
+                {props.pendingJobs.jobDescription}
               </span>
             </div>
           </div>
 
           <Card.Description style={{ marginTop: "15px" }}>
-            {props.activeJobs.skillsRequired.map((itm) => {
+            {props.pendingJobs.skillsRequired.map((itm) => {
               return options.map((item) => {
                 return item.value === itm ? (
                   <Label
@@ -132,6 +152,7 @@ const JobCard = (props) => {
                 ) : null;
               });
             })}
+
             <Button basic color="green" floated="right" onClick={handleOnView}>
               View
             </Button>
@@ -146,9 +167,9 @@ const JobCard = (props) => {
         <Modal.Body>
           <Card style={{ padding: "10px", width: "80%", marginLeft: "10%" }}>
             <Card.Content>
-              <Card.Header>{props.activeJobs.jobTitle}</Card.Header>
+              <Card.Header>{props.pendingJobs.jobTitle}</Card.Header>
               <div style={{ marginTop: "5px", fontWeight: "600" }}>
-                {props.activeJobs.companyName}
+                {props.pendingJobs.companyName}
               </div>
               <div style={{ color: "#71797E", fontWeight: "600" }}>
                 <div
@@ -156,7 +177,7 @@ const JobCard = (props) => {
                 >
                   <Icon name="briefcase" />
                   <span style={{ fontSize: "12px", paddingLeft: "3px" }}>
-                    {props.activeJobs.expRequired} Yrs
+                    {props.pendingJobs.expRequired} Yrs
                   </span>
                 </div>
               </div>
@@ -176,13 +197,13 @@ const JobCard = (props) => {
                       paddingLeft: "3px",
                     }}
                   >
-                    {props.activeJobs.jobDescription}
+                    {props.pendingJobs.jobDescription}
                   </span>
                 </div>
               </div>
 
               <Card.Description style={{ marginTop: "15px" }}>
-                {props.activeJobs.skillsRequired.map((itm) => {
+                {props.pendingJobs.skillsRequired.map((itm) => {
                   return options.map((item) => {
                     return item.value === itm ? (
                       <Label
@@ -198,8 +219,11 @@ const JobCard = (props) => {
           </Card>
         </Modal.Body>
         <Modal.Footer>
-          <Buttonb variant="primary" onClick={handleOnApply}>
-            Apply
+          <Buttonb variant="danger" onClick={handleOnDeny}>
+            Deny
+          </Buttonb>
+          <Buttonb variant="primary" onClick={handleOnVerify}>
+            Verify
           </Buttonb>
         </Modal.Footer>
       </Modal>
@@ -218,4 +242,4 @@ const JobCard = (props) => {
   );
 };
 
-export default JobCard;
+export default UnlistedJobCard;

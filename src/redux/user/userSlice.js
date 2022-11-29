@@ -6,31 +6,31 @@ const initialState = {
   user: [],
   error: "",
   isLogged: false,
-  
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
-  const response = await axios
-    .get("http://localhost:7071/user/getuser", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+  const response = await axios.get("http://localhost:7071/user/getuser", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return response.data;
 });
 
 export const applyJob = createAsyncThunk("user/applyJob", async (job) => {
-  const response = await axios
-    .put("http://localhost:7072/profile/applyjob",job)
-    console.log(response.data)
+  const response = await axios.put(
+    "http://localhost:7072/profile/applyjob",
+    job
+  );
+  console.log(response.data);
   return response.data;
 });
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers:{
-    logout: (state,action) => {
-      state.isLogged = false
-    }
+  reducers: {
+    logout: (state, action) => {
+      state.isLogged = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUser.pending, (state) => {
@@ -40,7 +40,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.error = "";
-      state.isLogged = true
+      state.isLogged = true;
     });
     builder.addCase(fetchUser.rejected, (state, action) => {
       state.loading = false;
@@ -50,6 +50,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {logout} = userSlice.actions;
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

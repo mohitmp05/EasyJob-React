@@ -29,12 +29,16 @@ const Homepage = (props) => {
       dispatch(fetchUser(props.data));
     }
   }, []);
-  
-  return(
+
+  return (
     <div>
-          {user.user.role==="USER"?<Userpage data={props.data}/>:<EmployerPage data={props.data}/>}
+      {user.user.role === "USER" ? (
+        <Userpage data={props.data} />
+      ) : (
+        <EmployerPage data={props.data} />
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Homepage;

@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Item, Button, Icon, Label, Header } from "semantic-ui-react";
-import { fetchRecommendedJobs } from "../redux/job/jobSlice";
+import { fetchActiveJobs } from "../redux/job/jobSlice";
 import JobCard from "./JobCard";
 
 const AllJobs = () => {
+  const dispatch = useDispatch();
+  const activeJobs = useSelector((state) => state.job.activeJobs);
 
-    const dispatch = useDispatch();
-    const recommendedJobs= useSelector((state)=>state.job.recommendedJobs)
-
-    useEffect(()=>{
-        dispatch(fetchRecommendedJobs())
-    },[])
+  useEffect(() => {
+    dispatch(fetchActiveJobs());
+  }, []);
   return (
     <div
       style={{
@@ -21,9 +20,9 @@ const AllJobs = () => {
         paddingBottom: "10px",
       }}
     >
-        {recommendedJobs.map((items)=>{
-            return <JobCard recommendedJobs={items}/>
-        })}
+      {activeJobs.map((items) => {
+        return <JobCard activeJobs={items} />;
+      })}
     </div>
   );
 };

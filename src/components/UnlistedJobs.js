@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Item, Button, Icon, Label, Header } from "semantic-ui-react";
-import { fetchRecommendedJobs } from "../redux/job/jobSlice";
+import { fetchPendingJobs } from "../redux/job/jobSlice";
 import ApplicantCard from "./ApplicantCard";
 import JobCard from "./JobCard";
+import UnlistedJobCard from "./UnlistedJobCard";
 
-const Applicants = () => {
+const UnlistedJobs = () => {
   const dispatch = useDispatch();
-  const recommendedJobs = useSelector((state) => state.job.recommendedJobs);
+  const pendingJobs = useSelector((state) => state.job.pendingJobs);
 
   useEffect(() => {
-    dispatch(fetchRecommendedJobs());
+    dispatch(fetchPendingJobs());
   }, []);
   return (
     <div>
@@ -18,7 +19,7 @@ const Applicants = () => {
         as="h2"
         style={{ width: "100%", padding: "10px", alignItems: "center" }}
       >
-        <Header.Content>View Applicants</Header.Content>
+        <Header.Content>Unlisted Jobs</Header.Content>
         <hr />
       </Header>
       <div
@@ -28,12 +29,12 @@ const Applicants = () => {
           paddingTop: "10px",
         }}
       >
-        {recommendedJobs.map((items) => {
-          return <ApplicantCard recommendedJobs={items} />;
+        {pendingJobs.map((items) => {
+          return <UnlistedJobCard pendingJobs={items} />;
         })}
       </div>
     </div>
   );
 };
 
-export default Applicants;
+export default UnlistedJobs;

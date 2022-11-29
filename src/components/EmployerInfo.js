@@ -34,7 +34,13 @@ const EmployerInfo = (props) => {
     >
       <Header
         as="h2"
-        style={{ width: "100%", padding: "10px", alignItems: "center",position:'absolute',top:'0'}}
+        style={{
+          width: "100%",
+          padding: "10px",
+          alignItems: "center",
+          position: "absolute",
+          top: "0",
+        }}
       >
         <Header.Content>Organization Information</Header.Content>
         <hr />
@@ -48,7 +54,7 @@ const EmployerInfo = (props) => {
               readonly=""
               placeholder="Company Name"
               defaultValue={employer.companyName}
-              style={{padding:"10px", fontSize:"20px"}}
+              style={{ padding: "10px", fontSize: "20px" }}
             />
           </div>
           <div class="field">
@@ -58,7 +64,7 @@ const EmployerInfo = (props) => {
               readonly=""
               placeholder="Phone Number"
               defaultValue={employer.ph}
-              style={{padding:"10px", fontSize:"20px"}}
+              style={{ padding: "10px", fontSize: "20px" }}
             />
           </div>
         </div>

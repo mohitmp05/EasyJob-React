@@ -153,9 +153,11 @@ const EmployerPage = (props) => {
           </a>
         </Menu.Item>
       ),
-      render: () =>         <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
-      <AllPostedJobs data={props.data} />
-    </Tab.Pane>,
+      render: () => (
+        <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
+          <AllPostedJobs data={props.data} />
+        </Tab.Pane>
+      ),
     },
     {
       menuItem: (

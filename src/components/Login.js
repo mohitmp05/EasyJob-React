@@ -12,36 +12,18 @@ import { useNavigate } from "react-router";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const [flag, setFlag] = useState(true);
-  const [jwtToken, setJwtToken] = useState("");
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.authentication.jwt);
-  const user = useSelector((state) => state.user);
-  const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //   document.title= "Login | EasyJob"
-  //   setJwtToken(token);
-  //   if(jwtToken.length && flag){
-  //     dispatch(fetchUser(jwtToken))
-  //     setFlag(false)
-  //   }
-  // })
-
-  useEffect(()=>{
-    document.title= "Login | EasyJob"
-    // if(JSON.parse(localStorage.getItem("jwt")).length){
-    //   navigate("/home")
-    // }
-  })
+  useEffect(() => {
+    document.title = "Login | EasyJob";
+  });
 
   const handleOnSubmit = () => {
     dispatch(authenticateUser({ username: username, password: password }));
   };
 
-  if(JSON.parse(localStorage.getItem("jwt")).length){
-    return <Homepage data={JSON.parse(localStorage.getItem("jwt"))}/>
+  if (JSON.parse(localStorage.getItem("jwt")).length) {
+    return <Homepage data={JSON.parse(localStorage.getItem("jwt"))} />;
   }
 
   // if(!flag){
@@ -49,18 +31,7 @@ const Login = () => {
   // }
 
   return (
-    <section style={{ backgroundColor: "#eee", padding:"135px" }}>
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        theme="light"
-      />
+    <section style={{ backgroundColor: "#eee", padding: "135px" }}>
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
@@ -73,7 +44,6 @@ const Login = () => {
                     </p>
                     <Form onSubmit={handleOnSubmit}>
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 text-danger">
-                        <span>{msg}</span>
                       </div>
                       <Form.Field className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <Input
@@ -143,6 +113,17 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        theme="light"
+      />
     </section>
   );
 };

@@ -3,26 +3,33 @@ import axios from "axios";
 
 const initialState = {
   loading: false,
-  jobs:[],
-  error: "",  
+  jobs: [],
+  error: "",
 };
 
-
 export const fetchJobs = createAsyncThunk("employerJob/fetchJobs", async () => {
-  const response = await axios
-    .get("http://localhost:7071/job/getjobbyusername",{
-      headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}` },
-    })
+  const response = await axios.get(
+    "http://localhost:7071/job/getjobbyusername",
+    {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+      },
+    }
+  );
   return response.data;
 });
 
-export const addJobDetails = createAsyncThunk("employerJob/addJobDetails", async (job) => {
-  const response = await axios
-    .put("http://localhost:7071/job/addjob",job,{
-      headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}` },
-    })
-  return response.data;
-});
+export const addJobDetails = createAsyncThunk(
+  "employerJob/addJobDetails",
+  async (job) => {
+    const response = await axios.put("http://localhost:7071/job/addjob", job, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt"))}`,
+      },
+    });
+    return response.data;
+  }
+);
 
 const employerjobSlice = createSlice({
   name: "employerJob",
@@ -33,9 +40,9 @@ const employerjobSlice = createSlice({
     });
     builder.addCase(fetchJobs.fulfilled, (state, action) => {
       state.loading = false;
-      if (typeof action.payload ==="string") {
-        state.jobs=[];
-      }else{
+      if (typeof action.payload === "string") {
+        state.jobs = [];
+      } else {
         state.jobs = action.payload;
       }
       state.error = "";
