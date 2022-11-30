@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UserJobsRepo extends JpaRepository<UserJobs, Integer> {
     List<UserJobs> findByUsername(String username);
+    UserJobs findByCompanyName(String companyName);
 }

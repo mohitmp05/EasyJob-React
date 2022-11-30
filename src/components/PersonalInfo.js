@@ -8,6 +8,7 @@ import {
   Form,
   Header,
   Icon,
+  Label,
 } from "semantic-ui-react";
 import {
   fetchProfile,
@@ -19,21 +20,12 @@ const PersonalInfo = (props) => {
     { key: "angular", text: "Angular", value: 1 },
     { key: "css", text: "CSS", value: 2 },
     { key: "design", text: "Graphic Design", value: 3 },
-    { key: "ember", text: "Ember", value: 4 },
-    { key: "html", text: "HTML", value: 5 },
-    { key: "ia", text: "Information Architecture", value: 6 },
-    { key: "javascript", text: "Javascript", value: 7 },
-    { key: "mech", text: "Mechanical Engineering", value: 8 },
-    { key: "meteor", text: "Meteor", value: 9 },
-    { key: "node", text: "NodeJS", value: 10 },
-    { key: "plumbing", text: "Plumbing", value: 11 },
-    { key: "python", text: "Python", value: 12 },
-    { key: "rails", text: "Rails", value: 13 },
-    { key: "react", text: "React", value: 14 },
-    { key: "repair", text: "Kitchen Repair", value: 15 },
-    { key: "ruby", text: "Ruby", value: 16 },
-    { key: "ui", text: "UI Design", value: 17 },
-    { key: "ux", text: "User Experience", value: 18 },
+    { key: "html", text: "HTML", value: 4 },
+    { key: "javascript", text: "Javascript", value: 5 },
+    { key: "node", text: "NodeJS", value: 6 },
+    { key: "python", text: "Python", value: 7 },
+    { key: "react", text: "React", value: 8 },
+    { key: "ui", text: "UI Design", value: 9 },
   ];
 
   const dispatch = useDispatch();
@@ -76,6 +68,7 @@ const PersonalInfo = (props) => {
         college: userProfile.college,
         contactNo: userProfile.contactNo,
         address: userProfile.address,
+        skills: userProfile.skills,
         highestQualification: userProfile.highestQualification,
         yearOfExperience: userProfile.yearOfExperience,
         pastEmployer: userProfile.pastEmployer,
@@ -97,6 +90,14 @@ const PersonalInfo = (props) => {
       theme: "light",
     });
   };
+
+  const handleOnSkills = (e, { value }) => {
+    setskills((skills) => [...skills, value]);
+    setUserDetails({
+      ...userDetails,
+      skills: [...skills, value].at(skills.length),
+    });
+  };
 
   return (
     <div
@@ -201,22 +202,33 @@ const PersonalInfo = (props) => {
         </Form.Group>
 
         <Form.Group widths={2}>
+        {
+          !isVisible?
           <Form.Dropdown
-            label="Skills"
-            placeholder="Skills"
-            multiple
-            selection
-            search
-            options={options}
-            disabled={isVisible}
-            onChange={(e, { value }) => {
-              setskills((skills) => [...skills, value]);
-              setUserDetails({
-                ...userDetails,
-                skills: skills.at(skills.length - 1),
-              });
-            }}
-          />
+          label="Skills"
+          placeholder="Skills"
+          multiple
+          selection
+          search
+          options={options}
+          disabled={isVisible}
+          onChange={handleOnSkills}
+        />:
+        <Form.Field>
+          
+        {!userProfile.skills===[] && userProfile.skills.map((itm) => {
+          return options.map((item) => {
+            return item.value === itm ? (
+              <Label
+                as="a"
+                content={item.text}
+                style={{ paddingTop: "5px" }}
+              />
+            ) : null;
+          });
+        })}
+        </Form.Field>
+      }
           <Form.Input
             label="Years Of Experience"
             placeholder="Years Of Experience"

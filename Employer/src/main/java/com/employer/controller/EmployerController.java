@@ -14,11 +14,6 @@ public class EmployerController {
     @Autowired
     private EmployerService empService;
 
-//    @GetMapping("/test")
-//    public String Test() {
-//    	return "sucess";
-//    }
-
     @PutMapping("/addempdetails")
     public ResponseEntity addEmp(@RequestBody EmployerProfile emp) {
         return ResponseEntity.ok(empService.addEmpDetails(emp));

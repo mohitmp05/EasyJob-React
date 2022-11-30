@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import {
-  Tab,
-  Grid,
-  Segment,
-  Icon,
-  Header,
-  Image,
-  Menu,
-  MenuItem,
-  HeaderSubheader,
-} from "semantic-ui-react";
 import { fetchUser } from "../redux/user/userSlice";
 import EmployerPage from "./EmployerPage";
-import HomepageNavbar from "./HomepageNavbar";
-import Jobs from "./Jobs";
-import LandingNavbar from "./LandingNavbar";
-import PersonalInfo from "./PersonalInfo";
 import Userpage from "./Userpage";
 
 const Homepage = (props) => {
@@ -34,8 +19,10 @@ const Homepage = (props) => {
     <div>
       {user.user.role === "USER" ? (
         <Userpage data={props.data} />
-      ) : (
+      ) : user.user.role === "EMPLOYER" ? (
         <EmployerPage data={props.data} />
+      ) : (
+        <h2>Not a valid user</h2>
       )}
     </div>
   );

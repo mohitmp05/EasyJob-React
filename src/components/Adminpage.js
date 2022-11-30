@@ -13,20 +13,6 @@ import {
   HeaderSubheader,
 } from "semantic-ui-react";
 import { fetchUser } from "../redux/user/userSlice";
-import EmployerInfo from "./EmployerInfo";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Jobs from "./Jobs";
-import PersonalInfo from "./PersonalInfo";
-import {
-  addEmployerDetails,
-  fetchEmployer,
-} from "../redux/employer/employerSlice";
-import AddJob from "./AddJob";
-import AllJobs from "./AllJobs";
-import AllPostedJobs from "./AllPostedJobs";
-import Applicants from "./Applicants";
 import UnlistedJobs from "./UnlistedJobs";
 import ListedJobs from "./ListedJobs";
 

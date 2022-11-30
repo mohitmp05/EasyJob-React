@@ -20,15 +20,12 @@ const Login = () => {
 
   const handleOnSubmit = () => {
     dispatch(authenticateUser({ username: username, password: password }));
+    window.location.reload()
   };
 
   if (JSON.parse(localStorage.getItem("jwt")).length) {
     return <Homepage data={JSON.parse(localStorage.getItem("jwt"))} />;
   }
-
-  // if(!flag){
-  //   return <Homepage data={user}/>
-  // }
 
   return (
     <section style={{ backgroundColor: "#eee", padding: "135px" }}>

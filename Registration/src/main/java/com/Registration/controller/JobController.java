@@ -23,11 +23,8 @@ public class JobController {
     private static final String ADD_JOB = "http://localhost:7073/job/addjob/";
     private static final String GET_ALL_JOBS = "http://localhost:7073/job/getjobs";
     private static final String GET_JOB_BY_USERNAME = "http://localhost:7073/job/getjob/";
-    private static final String DELETE_JOB = "http://localhost:7073/job/deletejob/";
     private static final String GET_ACTIVE_JOBS = "http://localhost:7073/job/getactivejobs";
     private static final String GET_PENDING_JOBS = "http://localhost:7073/job/getpendingjobs";
-
-
 
     @PutMapping("/addjob")
     public ResponseEntity addJob(@RequestBody JobDTO jobDTO) throws JsonProcessingException {

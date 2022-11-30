@@ -21,21 +21,12 @@ const AddJob = (props) => {
     { key: "angular", text: "Angular", value: 1 },
     { key: "css", text: "CSS", value: 2 },
     { key: "design", text: "Graphic Design", value: 3 },
-    { key: "ember", text: "Ember", value: 4 },
-    { key: "html", text: "HTML", value: 5 },
-    { key: "ia", text: "Information Architecture", value: 6 },
-    { key: "javascript", text: "Javascript", value: 7 },
-    { key: "mech", text: "Mechanical Engineering", value: 8 },
-    { key: "meteor", text: "Meteor", value: 9 },
-    { key: "node", text: "NodeJS", value: 10 },
-    { key: "plumbing", text: "Plumbing", value: 11 },
-    { key: "python", text: "Python", value: 12 },
-    { key: "rails", text: "Rails", value: 13 },
-    { key: "react", text: "React", value: 14 },
-    { key: "repair", text: "Kitchen Repair", value: 15 },
-    { key: "ruby", text: "Ruby", value: 16 },
-    { key: "ui", text: "UI Design", value: 17 },
-    { key: "ux", text: "User Experience", value: 18 },
+    { key: "html", text: "HTML", value: 4 },
+    { key: "javascript", text: "Javascript", value: 5 },
+    { key: "node", text: "NodeJS", value: 6 },
+    { key: "python", text: "Python", value: 7 },
+    { key: "react", text: "React", value: 8 },
+    { key: "ui", text: "UI Design", value: 9 },
   ];
 
   const dispatch = useDispatch();
@@ -53,6 +44,14 @@ const AddJob = (props) => {
       dispatch(fetchProfile(props.data));
     }
   }, []);
+
+  const handleOnSkills = (e, { value }) => {
+    setskills((skills) => [...skills, value]);
+    setJob({
+      ...job,
+      skillsRequired: [...skills, value].at(skills.length),
+    });
+  };
 
   const handlePostJob = () => {
     dispatch(addJobDetails(job));
@@ -83,6 +82,7 @@ const AddJob = (props) => {
         width: "100%",
       }}
     >
+      {  console.log(job)}
       <Header
         as="h2"
         style={{ width: "100%", padding: "10px", alignItems: "center" }}
@@ -114,10 +114,7 @@ const AddJob = (props) => {
             selection
             search
             options={options}
-            onChange={(e, { value }) => {
-              setskills((skills) => [...skills, value]);
-              setJob({ ...job, skillsRequired: skills.at(skills.length - 1) });
-            }}
+            onChange={handleOnSkills}
           />
           <Form.Input
             label="Experience Required"

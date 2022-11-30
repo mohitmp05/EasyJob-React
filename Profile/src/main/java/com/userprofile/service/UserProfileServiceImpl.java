@@ -1,5 +1,6 @@
 package com.userprofile.service;
 
+import com.userprofile.dto.ApplicantsDTO;
 import com.userprofile.model.UserJobs;
 import com.userprofile.model.UserProfile;
 import com.userprofile.repository.UserJobsRepo;
@@ -20,6 +21,9 @@ public class UserProfileServiceImpl {
 
     @Autowired
     private UserJobsRepo userJobsRepo;
+
+    @Autowired
+    private UserProfileRepository userProfileRepository;
 
     // Adding profile
     public UserProfile addUser(UserProfile profile){
@@ -44,6 +48,26 @@ public class UserProfileServiceImpl {
     public String applyJob(UserJobs job){
         userJobsRepo.save(job);
         return "Job Applied";
+    }
+
+    public ApplicantsDTO getApplicants(String companyName){
+        UserJobs userJobs = userJobsRepo.findByCompanyName(companyName);
+        String username = userJobs.getUsername();
+        UserProfile userProfile = userProfileRepository.findById(username).orElse(null);
+        ApplicantsDTO applicantsDTO = new ApplicantsDTO();
+        applicantsDTO.setUsername(userProfile.getUsername());
+        applicantsDTO.setAddress(userProfile.getAddress());
+        applicantsDTO.setCollege(userProfile.getCollege());
+        applicantsDTO.setAadharNo(userProfile.getAadharNo());
+        applicantsDTO.setFullName(userProfile.getFullName());
+        applicantsDTO.setSkills(userProfile.getSkills());
+        applicantsDTO.setContactNo(userProfile.getContactNo());
+        applicantsDTO.setJobTitle(userJobs.getJobTitle());
+        applicantsDTO.setJobDescription(userJobs.getJobDescription());
+        applicantsDTO.setPastEmployer(userProfile.getPastEmployer());
+        applicantsDTO.setYearOfExperience(userProfile.getYearOfExperience());
+        applicantsDTO.setHighestQualification(userProfile.getHighestQualification());
+        return applicantsDTO;
     }
 
 //    public FileDB store(MultipartFile file) throws IOException {
