@@ -95,7 +95,7 @@ const ApplicantCard = (props) => {
             })}
 
             <Button basic color="green" floated="right" onClick={handleOnView}>
-              View
+              Shortlist
             </Button>
           </Card.Description>
         </Card.Content>

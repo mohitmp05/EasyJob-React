@@ -228,7 +228,7 @@ const PersonalInfo = (props) => {
         </Form.Group>
 
         <Form.Group widths={2}>
-          {!isVisible ? (
+        {!isVisible ? (
             <Form.Dropdown
               label="Skills"
               placeholder="Skills"
@@ -241,7 +241,7 @@ const PersonalInfo = (props) => {
             />
           ) : (
             <Form.Field>
-              {
+              {!userProfile.skills===[]?
                 userProfile.skills.map((itm) => {
                   return options.map((item) => {
                     return item.value === itm ? (
@@ -252,7 +252,7 @@ const PersonalInfo = (props) => {
                       />
                     ) : null;
                   });
-                })}
+                }):null}
             </Form.Field>
           )}
           <Form.Input
