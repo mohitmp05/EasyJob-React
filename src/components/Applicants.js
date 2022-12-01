@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Item, Button, Icon, Label, Header } from "semantic-ui-react";
+import { fetchApplicants } from "../redux/employer/employerjobSlice";
 import { fetchRecommendedJobs } from "../redux/job/jobSlice";
 import ApplicantCard from "./ApplicantCard";
 import JobCard from "./JobCard";
 
-const Applicants = () => {
+const Applicants = (props) => {
   const dispatch = useDispatch();
-  const recommendedJobs = useSelector((state) => state.job.recommendedJobs);
+  const applicants = useSelector((state) => state.employerJob.applicants);
 
   useEffect(() => {
-    dispatch(fetchRecommendedJobs());
-  }, []);
+    dispatch(fetchApplicants(props.companyName));
+  },[]);
+  
   return (
     <div>
       <Header
@@ -28,9 +30,11 @@ const Applicants = () => {
           paddingTop: "10px",
         }}
       >
-        {recommendedJobs.map((items) => {
-          return <ApplicantCard recommendedJobs={items} />;
-        })}
+        {console.log(applicants)}
+        {
+          applicants.map((items) => {
+            return <ApplicantCard applicants={items} />;
+          })}
       </div>
     </div>
   );

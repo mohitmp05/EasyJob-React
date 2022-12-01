@@ -28,7 +28,4 @@ public class UserProfile {
     private String yearOfExperience;
     private String pastEmployer;
     private String address;
-//    @Lob
-//    @Column(name = "resumedata", length = 1000)
-//    private byte[] resumeData;
 }

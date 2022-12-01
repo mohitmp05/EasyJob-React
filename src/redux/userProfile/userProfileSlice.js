@@ -29,6 +29,22 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const uploadResume = createAsyncThunk(
+  "user/uploadResume",
+  async (resumeData) => {
+    const response = await axios.put(
+      "http://localhost:7072/profile/upload/"+resumeData.username,
+      resumeData.resume,{
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+
 const userProfileSlice = createSlice({
   name: "userProfile",
   initialState,

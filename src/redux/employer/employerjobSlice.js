@@ -4,6 +4,8 @@ import axios from "axios";
 const initialState = {
   loading: false,
   jobs: [],
+  applicants: [],
+  resume: null,
   error: "",
 };
 
@@ -31,6 +33,35 @@ export const addJobDetails = createAsyncThunk(
   }
 );
 
+export const fetchApplicants = createAsyncThunk(
+  "employerJob/fetchApplicants",
+  async (companyName) => {
+    return await axios
+      .get("http://localhost:7072/profile/applicants/" + companyName)
+      .then((response) => response.data);
+  }
+);
+
+export const downloadResume = createAsyncThunk(
+  "employerJob/downloadResume",
+  async (username) => {
+    const response = await axios
+      .get("http://localhost:7072/profile/" + username)
+      .then(response => {
+        console.log(response.data)
+        const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+      });
+    })
+
+  }
+);
+
 const employerjobSlice = createSlice({
   name: "employerJob",
   initialState,
@@ -53,15 +84,30 @@ const employerjobSlice = createSlice({
       state.error = action.error.message;
     });
 
-    builder.addCase(addJobDetails.pending, (state) => {
+    builder.addCase(fetchApplicants.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(addJobDetails.fulfilled, (state, action) => {
+    builder.addCase(fetchApplicants.fulfilled, (state, action) => {
       state.loading = false;
+      state.applicants = action.payload;
       state.error = "";
     });
-    builder.addCase(addJobDetails.rejected, (state, action) => {
+    builder.addCase(fetchApplicants.rejected, (state, action) => {
       state.loading = false;
+      state.applicants = [];
+      state.error = action.error.message;
+    });
+    builder.addCase(downloadResume.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(downloadResume.fulfilled, (state, action) => {
+      state.loading = false;
+      state.resume = action.payload;
+      state.error = "";
+    });
+    builder.addCase(downloadResume.rejected, (state, action) => {
+      state.loading = false;
+      state.resume = null;
       state.error = action.error.message;
     });
   },

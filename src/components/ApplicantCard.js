@@ -9,39 +9,9 @@ import { toast, ToastContainer } from "react-toastify";
 
 const ApplicantCard = (props) => {
   const [show, setShow] = useState(false);
-  const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.user.username);
-  const [job, setJob] = useState({
-    jobId: 0,
-    username: username,
-    jobTitle: "",
-    companyName: "",
-    jobDescription: "",
-    skillsRequired: [],
-    applyStatus: false,
-  });
-
+  
   const handleOnView = () => {
     setShow(true);
-    const newJobs = () => {
-      return {
-        ...job,
-        jobId: props.recommendedJobs.jobId,
-        jobTitle: props.recommendedJobs.jobTitle,
-        companyName: props.recommendedJobs.companyName,
-        jobDescription: props.recommendedJobs.jobDescription,
-        skillsRequired: props.recommendedJobs.skillsRequired,
-        applyStatus: false,
-      };
-    };
-    setJob(newJobs);
-    console.log(job);
-  };
-
-  const handleOnApply = () => {
-    dispatch(applyJob(job));
-    notify();
-    setShow(false);
   };
 
   const handleOnClose = () => {
@@ -77,15 +47,15 @@ const ApplicantCard = (props) => {
     <>
       <Card style={{ padding: "10px", width: "80%", marginLeft: "10%" }}>
         <Card.Content>
-          <Card.Header>{props.recommendedJobs.jobTitle}</Card.Header>
+          <Card.Header>{props.applicants.fullName}</Card.Header>
           <div style={{ marginTop: "5px", fontWeight: "600" }}>
-            {props.recommendedJobs.companyName}
+            {props.applicants.aadharNo}
           </div>
           <div style={{ color: "#71797E", fontWeight: "600" }}>
             <div style={{ backgroundColor: "transaparent", marginTop: "1px" }}>
               <Icon name="briefcase" />
               <span style={{ fontSize: "12px", paddingLeft: "3px" }}>
-                {props.recommendedJobs.expRequired} Yrs
+                {props.applicants.yearOfExperience} Yrs
               </span>
             </div>
           </div>
@@ -106,13 +76,13 @@ const ApplicantCard = (props) => {
                   paddingLeft: "3px",
                 }}
               >
-                {props.recommendedJobs.jobDescription}
+                {props.applicants.contactNo}
               </span>
             </div>
           </div>
 
           <Card.Description style={{ marginTop: "15px" }}>
-            {props.recommendedJobs.skillsRequired.map((itm) => {
+            {props.applicants.skills.map((itm) => {
               return options.map((item) => {
                 return item.value === itm ? (
                   <Label
@@ -131,16 +101,16 @@ const ApplicantCard = (props) => {
         </Card.Content>
       </Card>
 
-      <Modal show={show} onHide={handleOnClose} size="lg">
+      {/* <Modal show={show} onHide={handleOnClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Job Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Card style={{ padding: "10px", width: "80%", marginLeft: "10%" }}>
             <Card.Content>
-              <Card.Header>{props.recommendedJobs.jobTitle}</Card.Header>
+              <Card.Header>{props.applicants.jobTitle}</Card.Header>
               <div style={{ marginTop: "5px", fontWeight: "600" }}>
-                {props.recommendedJobs.companyName}
+                {props.applicants.companyName}
               </div>
               <div style={{ color: "#71797E", fontWeight: "600" }}>
                 <div
@@ -148,7 +118,7 @@ const ApplicantCard = (props) => {
                 >
                   <Icon name="briefcase" />
                   <span style={{ fontSize: "12px", paddingLeft: "3px" }}>
-                    {props.recommendedJobs.expRequired} Yrs
+                    {props.applicants.expRequired} Yrs
                   </span>
                 </div>
               </div>
@@ -168,13 +138,13 @@ const ApplicantCard = (props) => {
                       paddingLeft: "3px",
                     }}
                   >
-                    {props.recommendedJobs.jobDescription}
+                    {props.applicants.jobDescription}
                   </span>
                 </div>
               </div>
 
               <Card.Description style={{ marginTop: "15px" }}>
-                {props.recommendedJobs.skillsRequired.map((itm) => {
+                {props.applicants.skillsRequired.map((itm) => {
                   return options.map((item) => {
                     return item.value === itm ? (
                       <Label
@@ -190,11 +160,11 @@ const ApplicantCard = (props) => {
           </Card>
         </Modal.Body>
         <Modal.Footer>
-          <Buttonb variant="primary" onClick={handleOnApply}>
-            Apply
+          <Buttonb variant="primary">
+            Shortlist
           </Buttonb>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
       <ToastContainer
         position="top-center"
         autoClose={1500}

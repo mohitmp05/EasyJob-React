@@ -20,7 +20,6 @@ const Login = () => {
 
   const handleOnSubmit = () => {
     dispatch(authenticateUser({ username: username, password: password }));
-    window.location.reload()
   };
 
   if (JSON.parse(localStorage.getItem("jwt")).length) {

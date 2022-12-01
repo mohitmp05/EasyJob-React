@@ -32,12 +32,29 @@ const EmployerPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [show, setShow] = useState(true);
+  const [companyName, setCompanyName] = useState("");
+  const [ph, setPh] = useState("");
+  const employer = useSelector((state) => state.employer.employer);
+
+
   useEffect(() => {
     if (props.data.length) {
       dispatch(fetchUser(props.data));
       dispatch(fetchEmployer(props.data));
     }
   }, []);
+
+  const handleAddDetails = () => {
+    setShow(false);
+    dispatch(
+      addEmployerDetails({
+        username: user.user.username,
+        companyName: companyName,
+        ph: ph,
+      })
+    );
+  };
   const panes = [
     {
       menuItem: (
@@ -186,27 +203,11 @@ const EmployerPage = (props) => {
       ),
       render: () => (
         <Tab.Pane style={{ width: "98%", marginLeft: "1%" }}>
-          <Applicants data={props.data} />
+          <Applicants data={props.data} companyName={props.employer.companyName}/>
         </Tab.Pane>
       ),
     },
   ];
-
-  const [show, setShow] = useState(true);
-  const [companyName, setCompanyName] = useState("");
-  const [ph, setPh] = useState("");
-  const employer = useSelector((state) => state.employer.employer);
-
-  const handleAddDetails = () => {
-    setShow(false);
-    dispatch(
-      addEmployerDetails({
-        username: user.user.username,
-        companyName: companyName,
-        ph: ph,
-      })
-    );
-  };
   return (
     <div style={{ padding: "10px", marginLeft: "20px" }}>
       {employer.length < 1 ? (

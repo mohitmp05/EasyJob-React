@@ -9,8 +9,8 @@ const initialState = {
 
 export const authenticateUser = createAsyncThunk(
   "authentication/authenticateUser",
-  (user) => {
-    return axios
+  async (user) => {
+    return await axios
       .post("http://localhost:7071/user/authenticate", user)
       .then((response) => {
         localStorage.setItem("jwt", JSON.stringify(response.data));

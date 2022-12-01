@@ -10,9 +10,11 @@ import {
   Icon,
   Label,
 } from "semantic-ui-react";
+import { downloadResume } from "../redux/employer/employerjobSlice";
 import {
   fetchProfile,
   updateUser,
+  uploadResume,
 } from "../redux/userProfile/userProfileSlice";
 
 const PersonalInfo = (props) => {
@@ -32,6 +34,28 @@ const PersonalInfo = (props) => {
   const userProfile = useSelector((state) => state.userProfile.userProfile);
   const [isVisible, setIsVisible] = useState(true);
   const [skills, setskills] = useState([]);
+  const [resumeData, setResumeData] = useState({
+    username: "",
+    resume: null,
+  });
+  const formData = new FormData();
+  const downloadedResume = useSelector((state) => state.employerJob.resume);
+
+  const handleOnUpload = (e) => {
+    console.log(e.target.files[0]);
+    formData.append("application", e.target.files[0]);
+    const newResumeData = () => {
+      return {
+        ...resumeData,
+        username: props.data,
+        resume: formData,
+      };
+    };
+    setResumeData(newResumeData);
+  };
+  const handleOnDownload = () => {
+    dispatch(downloadResume(props.data))
+  };
   const [userDetails, setUserDetails] = useState({
     username: props.data,
     fullName: "",
@@ -53,8 +77,10 @@ const PersonalInfo = (props) => {
 
   const handleOnUpdate = () => {
     dispatch(updateUser(userDetails));
+    dispatch(uploadResume(resumeData));
     notify();
     console.log(userDetails);
+    console.log(resumeData);
     setIsVisible(true);
   };
 
@@ -96,8 +122,8 @@ const PersonalInfo = (props) => {
     setUserDetails({
       ...userDetails,
       skills: [...skills, value].at(skills.length),
-    });
-  };
+    });
+  };
 
   return (
     <div
@@ -202,33 +228,33 @@ const PersonalInfo = (props) => {
         </Form.Group>
 
         <Form.Group widths={2}>
-        {
-          !isVisible?
-          <Form.Dropdown
-          label="Skills"
-          placeholder="Skills"
-          multiple
-          selection
-          search
-          options={options}
-          disabled={isVisible}
-          onChange={handleOnSkills}
-        />:
-        <Form.Field>
-          
-        {!userProfile.skills===[] && userProfile.skills.map((itm) => {
-          return options.map((item) => {
-            return item.value === itm ? (
-              <Label
-                as="a"
-                content={item.text}
-                style={{ paddingTop: "5px" }}
-              />
-            ) : null;
-          });
-        })}
-        </Form.Field>
-      }
+          {!isVisible ? (
+            <Form.Dropdown
+              label="Skills"
+              placeholder="Skills"
+              multiple
+              selection
+              search
+              options={options}
+              disabled={isVisible}
+              onChange={handleOnSkills}
+            />
+          ) : (
+            <Form.Field>
+              {
+                userProfile.skills.map((itm) => {
+                  return options.map((item) => {
+                    return item.value === itm ? (
+                      <Label
+                        as="a"
+                        content={item.text}
+                        style={{ paddingTop: "5px" }}
+                      />
+                    ) : null;
+                  });
+                })}
+            </Form.Field>
+          )}
           <Form.Input
             label="Years Of Experience"
             placeholder="Years Of Experience"
@@ -258,7 +284,8 @@ const PersonalInfo = (props) => {
             label="Resume"
             placeholder="Upload Resume"
             type="file"
-            disabled
+            onChange={handleOnUpload}
+            disabled={isVisible}
           />
         </Form.Group>
         <Button
@@ -269,6 +296,13 @@ const PersonalInfo = (props) => {
           Submit
         </Button>
       </Form>
+      <Button
+        secondary
+        onClick={handleOnDownload}
+        disabled={isVisible}
+      >
+        View Uploaded Resume
+      </Button>
     </div>
   );
 };
